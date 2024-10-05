@@ -32,10 +32,11 @@ class BlocCounterScreen extends StatelessWidget {
             onPressed: () {},
             child: const Icon(Icons.remove),
           ),
+          const SizedBox(height: 10),
           FloatingActionButton(
               heroTag: '3', onPressed: () {}, child: const Icon(Icons.clear)),
         ],
       ),
     );
   }
-}
+} 
