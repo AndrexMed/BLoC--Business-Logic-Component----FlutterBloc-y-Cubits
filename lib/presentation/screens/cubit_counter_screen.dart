@@ -15,6 +15,22 @@ class CubitCounterScreen extends StatelessWidget {
 class _CubitCounterView extends StatelessWidget {
   const _CubitCounterView();
 
+  void increment(BuildContext context, [int value = 1]) {
+    context.read<CounterCubit>().increment(value);
+  }
+
+  void decrement(BuildContext context, [int value = 1]) {
+    context.read<CounterCubit>().decrement(value);
+  }
+
+  void multiply(BuildContext context, [int value = 2]) {
+    context.read<CounterCubit>().multiply(value);
+  }
+
+  void reset(BuildContext context) {
+    context.read<CounterCubit>().reset();
+  }
+
   @override
   Widget build(BuildContext context) {
     final counterState = context.watch<CounterCubit>().state;
@@ -24,7 +40,9 @@ class _CubitCounterView extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () {},
+            onPressed: () {
+              reset(context);
+            },
           ),
         ],
       ),
@@ -42,18 +60,26 @@ class _CubitCounterView extends StatelessWidget {
         children: [
           FloatingActionButton(
             heroTag: '1',
-            onPressed: () {},
+            onPressed: () {
+              increment(context, 2);
+            },
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 10),
           FloatingActionButton(
             heroTag: '2',
-            onPressed: () {},
+            onPressed: () {
+              decrement(context, 2);
+            },
             child: const Icon(Icons.remove),
           ),
           const SizedBox(height: 10),
           FloatingActionButton(
-              heroTag: '3', onPressed: () {}, child: const Icon(Icons.clear)),
+              heroTag: '3',
+              onPressed: () {
+                multiply(context, 3);
+              },
+              child: const Icon(Icons.clear)),
         ],
       ),
     );
