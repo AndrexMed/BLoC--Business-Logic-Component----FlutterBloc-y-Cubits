@@ -11,6 +11,12 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
     // });
 
     on<Increment>(_onCounterIncreased);
+    on<Decrement>(_onCounterDecremented);
+    on<Multiply>(_onCounterMultiplied);
+    on<Reset>(_onCounterReset);
+    // on<Increment>(
+    //   (event, emit) => _onCounterIncreased(event, emit),
+    // ); Esta funcion es igual a la de arriba.
   }
 
   void _onCounterIncreased(
@@ -19,6 +25,36 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
   ) {
     emit(state.copyWith(
       counterValue: state.counterValue + event.value,
+      transactionCount: state.transactionCount + 1,
+    ));
+  }
+
+  void _onCounterDecremented(
+    Decrement event,
+    Emitter<CounterState> emit,
+  ) {
+    emit(state.copyWith(
+      counterValue: state.counterValue - event.value,
+      transactionCount: state.transactionCount + 1,
+    ));
+  }
+
+  void _onCounterMultiplied(
+    Multiply event,
+    Emitter<CounterState> emit,
+  ) {
+    emit(state.copyWith(
+      counterValue: state.counterValue * event.value,
+      transactionCount: state.transactionCount + 1,
+    ));
+  }
+
+  void _onCounterReset(
+    Reset event,
+    Emitter<CounterState> emit,
+  ) {
+    emit(state.copyWith(
+      counterValue: 0,
       transactionCount: state.transactionCount + 1,
     ));
   }
