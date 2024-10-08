@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  const CustomTextFormField({super.key});
+  final String? label;
+  final String? hintText;
+  final String? errorText;
+  final Function(String)? onChanged;
+  final String? Function(String?)? validator;
+  final bool? obscureText;
+
+  const CustomTextFormField({
+    super.key,
+    this.label,
+    this.hintText,
+    this.errorText,
+    this.onChanged,
+    this.validator,
+    this.obscureText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +27,35 @@ class CustomTextFormField extends StatelessWidget {
     );
 
     return TextFormField(
-      onChanged: (value) {
-        print(value);
-      },
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter some text';
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        enabledBorder: border,
-        focusedBorder: border.copyWith(
-          borderSide:
-              border.borderSide.copyWith(color: colors.primaryContainer),
-        ),
-        labelText: 'Name',
-        hintText: 'Enter your name',
-      ),
-    );
+        obscureText: obscureText ?? false,
+        onChanged: (value) {
+          if (onChanged != null) {
+            onChanged!(value);
+          }
+        },
+        validator: (value) {
+          if (validator != null) {
+            return validator!(value);
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+          suffixIcon: const Icon(Icons.person),
+          enabledBorder: border,
+          isDense: true,
+          focusedBorder: border.copyWith(
+            borderSide: border.borderSide.copyWith(color: colors.primary),
+          ),
+          labelText: label,
+          hintText: hintText ?? label,
+          focusColor: colors.primary,
+          errorText: errorText ?? '',
+          errorBorder: border.copyWith(
+            borderSide: border.borderSide.copyWith(color: Colors.red),
+          ),
+          focusedErrorBorder: border.copyWith(
+            borderSide: border.borderSide.copyWith(color: Colors.red),
+          ),
+        ));
   }
 }
