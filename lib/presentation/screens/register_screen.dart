@@ -64,8 +64,7 @@ class _RegisterForm extends StatelessWidget {
           hintText: 'Enter your user name',
           // onChanged: (value) => username = value,
           onChanged: registerCubit.userNameChanged,
-          errorText:
-              userName.isPure || userName.isValid ? null : 'Usuario no valido'
+          errorText: userName.errorMessage
           // validator: (p0) {
           //   if (p0 == null || p0.isEmpty) {
           //     return 'User name is required';
@@ -108,6 +107,7 @@ class _RegisterForm extends StatelessWidget {
         hintText: 'Enter your password',
         // onChanged: (value) => password = value,
         onChanged: registerCubit.passwordChanged,
+        errorText: password.errorMessage,
         // validator: (p0) {
         //   if (p0 == null || p0.isEmpty) {
         //     return 'Password is required';
