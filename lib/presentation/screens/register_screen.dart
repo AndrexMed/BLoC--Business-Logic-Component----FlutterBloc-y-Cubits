@@ -45,106 +45,101 @@ class _RegisterView extends StatelessWidget {
 }
 
 // ignore: must_be_immutable
-class _RegisterForm extends StatefulWidget {
+class _RegisterForm extends StatelessWidget {
   const _RegisterForm();
 
-  @override
-  State<_RegisterForm> createState() => _RegisterFormState();
-}
-
-class _RegisterFormState extends State<_RegisterForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  // String username = '';
-
-  // String email = '';
-
-  // String password = '';
-
+  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final registerCubit = context.watch<RegisterCubit>();
+    final userName = registerCubit.state.userName;
+    final email = registerCubit.state.email;
+    final password = registerCubit.state.password;
+
     return Form(
-        key: _formKey,
+        //key: _formKey,
         child: Column(children: [
-          CustomTextFormField(
-            label: 'User Name',
-            hintText: 'Enter your user name',
-            // onChanged: (value) => username = value,
-            onChanged: registerCubit.userNameChanged,
-            validator: (p0) {
-              if (p0 == null || p0.isEmpty) {
-                return 'User name is required';
-              }
-              if (p0.trim().isEmpty) {
-                return 'User name is required';
-              }
-              if (p0.length < 3) {
-                return 'User name must be at least 3 characters';
-              }
-              if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(p0)) {
-                return 'User name can only contain letters, numbers, and underscores';
-              }
-              return null;
-            },
+      CustomTextFormField(
+          label: 'User Name',
+          hintText: 'Enter your user name',
+          // onChanged: (value) => username = value,
+          onChanged: registerCubit.userNameChanged,
+          errorText:
+              userName.isPure || userName.isValid ? null : 'Usuario no valido'
+          // validator: (p0) {
+          //   if (p0 == null || p0.isEmpty) {
+          //     return 'User name is required';
+          //   }
+          //   if (p0.trim().isEmpty) {
+          //     return 'User name is required';
+          //   }
+          //   if (p0.length < 3) {
+          //     return 'User name must be at least 3 characters';
+          //   }
+          //   if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(p0)) {
+          //     return 'User name can only contain letters, numbers, and underscores';
+          //   }
+          //   return null;
+          // },
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextFormField(
-            label: 'Email',
-            hintText: 'Enter your email',
-            // onChanged: (value) => email = value,
-            onChanged: registerCubit.emailChanged,
-            validator: (p0) {
-              if (p0 == null || p0.isEmpty) {
-                return 'Email is required';
-              }
-              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(p0)) {
-                return 'Please enter a valid email address';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          CustomTextFormField(
-            label: 'Password',
-            hintText: 'Enter your password',
-            // onChanged: (value) => password = value,
-            onChanged: registerCubit.passwordChanged,
-            validator: (p0) {
-              if (p0 == null || p0.isEmpty) {
-                return 'Password is required';
-              }
-              if (p0.length < 6) {
-                return 'Password must be at least 6 characters';
-              }
-              if (!RegExp(r'[A-Za-z]').hasMatch(p0)) {
-                return 'Password must contain at least one letter';
-              }
-              if (!RegExp(r'\d').hasMatch(p0)) {
-                return 'Password must contain at least one number';
-              }
-              if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(p0)) {
-                return 'Password must contain at least one special character';
-              }
-              return null;
-            },
-            obscureText: true,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          FilledButton.tonalIcon(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                }
-              },
-              icon: const Icon(Icons.chevron_right),
-              label: const Text('Register')),
-        ]));
+      const SizedBox(
+        height: 10,
+      ),
+      CustomTextFormField(
+        label: 'Email',
+        hintText: 'Enter your email',
+        // onChanged: (value) => email = value,
+        onChanged: registerCubit.emailChanged,
+        // validator: (p0) {
+        //   if (p0 == null || p0.isEmpty) {
+        //     return 'Email is required';
+        //   }
+        //   if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(p0)) {
+        //     return 'Please enter a valid email address';
+        //   }
+        //   return null;
+        // },
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      CustomTextFormField(
+        label: 'Password',
+        hintText: 'Enter your password',
+        // onChanged: (value) => password = value,
+        onChanged: registerCubit.passwordChanged,
+        // validator: (p0) {
+        //   if (p0 == null || p0.isEmpty) {
+        //     return 'Password is required';
+        //   }
+        //   if (p0.length < 6) {
+        //     return 'Password must be at least 6 characters';
+        //   }
+        //   if (!RegExp(r'[A-Za-z]').hasMatch(p0)) {
+        //     return 'Password must contain at least one letter';
+        //   }
+        //   if (!RegExp(r'\d').hasMatch(p0)) {
+        //     return 'Password must contain at least one number';
+        //   }
+        //   if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(p0)) {
+        //     return 'Password must contain at least one special character';
+        //   }
+        //   return null;
+        // },
+        obscureText: true,
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      FilledButton.tonalIcon(
+          onPressed: () {
+            // if (_formKey.currentState!.validate()) {
+            //   _formKey.currentState!.save();
+            // }
+            registerCubit.registerFormSubmitted();
+          },
+          icon: const Icon(Icons.chevron_right),
+          label: const Text('Register')),
+    ]));
   }
 }

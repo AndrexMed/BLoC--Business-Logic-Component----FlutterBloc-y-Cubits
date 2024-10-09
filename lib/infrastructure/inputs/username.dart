@@ -14,9 +14,19 @@ class Username extends FormzInput<String, UsernameError> {
   // Override validator to handle validating a given input value.
   @override
   UsernameError? validator(String value) {
-    if (value.isEmpty || value.trim().isEmpty) {
+    if (value.isEmpty) {
       return UsernameError.empty;
     }
+    if (value.trim().isEmpty) {
+      return UsernameError.empty;
+    }
+    if (value.length < 3) {
+      return UsernameError.empty;
+    }
+    if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(value)) {
+      return UsernameError.empty;
+    }
+
     return null;
   }
 }
