@@ -19,7 +19,10 @@ class Password extends FormzInput<String, PasswordError> {
   const Password.dirty(String value) : super.dirty(value);
 
   String? get errorMessage {
-    if (value.isEmpty) {
+    if (isValid || isPure) {
+      return null;
+    }
+    if (displayError == PasswordError.empty) {
       return 'Password is required';
     }
     if (displayError == PasswordError.length) {
@@ -44,6 +47,10 @@ class Password extends FormzInput<String, PasswordError> {
   @override
   PasswordError? validator(String value) {
     if (value.isEmpty) {
+      return PasswordError.empty;
+    }
+
+    if (value.trim().isEmpty) {
       return PasswordError.empty;
     }
     if (value.length < 6) {

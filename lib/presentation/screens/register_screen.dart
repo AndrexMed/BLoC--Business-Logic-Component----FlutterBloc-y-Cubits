@@ -89,6 +89,7 @@ class _RegisterForm extends StatelessWidget {
         hintText: 'Enter your email',
         // onChanged: (value) => email = value,
         onChanged: registerCubit.emailChanged,
+        errorText: email.errorMessage,
         // validator: (p0) {
         //   if (p0 == null || p0.isEmpty) {
         //     return 'Email is required';
